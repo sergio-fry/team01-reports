@@ -9,6 +9,10 @@
   </head>
 
   <body>
+    <% if authenticated? %>
+      <%= link_to 'logout', logout_path %>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

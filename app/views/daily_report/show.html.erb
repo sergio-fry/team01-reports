@@ -1,0 +1,11 @@
+<h1>DailyReport#show</h1>
+
+<% @issues.group_by(&:assignee).each do |assignee, issues| %>
+  <strong><%= assignee %></strong>
+  <% issues.each do |issue| %>
+    <p>
+      <%= link_to issue.url, issue.url %>
+      <%= issue.component %>
+    </p>
+  <% end %>
+<% end %>
