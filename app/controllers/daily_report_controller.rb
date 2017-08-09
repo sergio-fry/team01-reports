@@ -17,7 +17,11 @@ class DailyReportController < ApplicationController
     end
 
     def title
-      'Issue title'
+      @jira_issue.summary
+    end
+
+    def details
+      title.match(/(\([0-9]+\))/)[1] rescue nil
     end
 
     def component
