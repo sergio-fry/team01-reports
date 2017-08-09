@@ -9,7 +9,7 @@ class DailyReportController < ApplicationController
     end
 
     def assignee
-      @jira_issue.assignee.name
+      @jira_issue.assignee.displayName
     end
 
     def url
