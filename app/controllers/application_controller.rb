@@ -24,4 +24,17 @@ class ApplicationController < ActionController::Base
       User.new session[:login], session[:password]
     end
   end
+
+  def jira_client
+    options = {
+      :username     => current_user.login,
+      :password     => current_user.password,
+      :site         => 'https://devprg.atlassian.net',
+      :context_path => '',
+      :auth_type    => :basic
+
+    }
+
+    @jira_client ||= JIRA::Client.new(options)
+  end
 end

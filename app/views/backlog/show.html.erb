@@ -1,0 +1,21 @@
+<h1>Backlog</h1>
+
+
+<table border="0" cellspacing="5" cellpadding="5">
+  <tr>
+    <th>Assigner</th>
+    <th>Issues</th>
+    <th>Remaining</th>
+  </tr>
+  <% @issues.group_by(&:assignee).each do |assignee, issues| %>
+    <tr>
+      <th><%= assignee %></th>
+      <td>
+        <% issues.each do |issue| %>
+          <%= link_to issue.key, issue.url %>
+        <% end %>
+      </td>
+      <td><%= distance_of_time_in_words Time.now, issues.map(&:remainig_working_days).sum.days.from_now %></td> 
+    </tr>
+  <% end %>
+</table>
