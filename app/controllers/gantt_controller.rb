@@ -21,5 +21,4 @@ class GanttController < ApplicationController
       (work_in_progress.issues + new_issues.issues).map { |issue| Issue.new(issue) }.map(&:to_hash)
     end.map { |el| OpenStruct.new(el) }
   end
-
 end
