@@ -1,0 +1,29 @@
+<h1>Gantt</h1>
+
+
+<table border="0" cellspacing="5" cellpadding="5">
+  <% @issues.group_by(&:assignee).each do |assignee, issues| %>
+    <tr>
+      <th>
+        <%= assignee %>
+      </th>
+      <td>
+      <% issues.each do |issue| %>
+        <span style="width: <%= issue.remainig_working_days * 70 %>px; display: inline-block; background: grey;" title='<%= issue.remainig_working_days %> day(s)'>
+          <%= issue.key %>
+        </span>
+      <% end %>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <td></td>
+    <td>
+      <% 14.times do |i| %>
+        <span style="width: 70px; display: inline-block; background: grey;" title='1 day'>
+          <%= i %> day
+        </span>
+      <% end %>
+    </td>
+  </tr>
+</table>
