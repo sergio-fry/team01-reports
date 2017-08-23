@@ -1,29 +1,29 @@
-<h1>Gantt</h1>
+<h1>Timeline</h1>
+
+<div id="timeline" style="height: 480px;"></div>
 
 
-<table border="0" cellspacing="5" cellpadding="5">
-  <% @issues.group_by(&:assignee).each do |assignee, issues| %>
-    <tr>
-      <th>
-        <%= assignee %>
-      </th>
-      <td>
-      <% issues.each do |issue| %>
-        <span style="width: <%= issue.remainig_working_days * 70 %>px; display: inline-block; background: grey;" title='<%= issue.remainig_working_days %> day(s)'>
-          <%= issue.key %>
-        </span>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+google.charts.load('current', {'packages':['timeline']});
+google.charts.setOnLoadCallback(drawChart);
+function drawChart() {
+  var container = document.getElementById('timeline');
+  var chart = new google.visualization.Timeline(container);
+  var dataTable = new google.visualization.DataTable();
+
+  dataTable.addColumn({ type: 'string', id: 'Assignee' });
+  dataTable.addColumn({ type: 'string', id: 'Issue' });
+  dataTable.addColumn({ type: 'date', id: 'Start' });
+  dataTable.addColumn({ type: 'date', id: 'End' });
+  dataTable.addRows([
+    <% @issue_sequences.each do |issue_sequence| %>
+      <% issue_sequence.issues.each do |issue| %>
+      [ '<%= issue_sequence.assignee %>', '<%= issue.key %>', new Date('<%= issue.start_date %>'), new Date('<%= issue.end_date %>') ],
       <% end %>
-      </td>
-    </tr>
-  <% end %>
-  <tr>
-    <td></td>
-    <td>
-      <% 14.times do |i| %>
-        <span style="width: 70px; display: inline-block; background: grey;" title='1 day'>
-          <%= i %> day
-        </span>
-      <% end %>
-    </td>
-  </tr>
-</table>
+    <% end %>
+    ]);
+
+  chart.draw(dataTable);
+}
+  </script>

@@ -1,8 +1,13 @@
 class GanttController < ApplicationController
 
-
   def show
     @issues = cached_issues.reject { |is| is.remainig_working_days == 0 }
+
+    @issue_sequences = []
+
+    @issues.group_by(&:assignee).each do |assignee, issues|
+      @issue_sequences << IssueSequence.new(assignee, issues)
+    end
   end
 
   private
