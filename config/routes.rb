@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   get 'daily_report', to: 'daily_report#show'
   get 'backlog', to: 'backlog#show'
+  get 'gantt', to: 'gantt#show'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

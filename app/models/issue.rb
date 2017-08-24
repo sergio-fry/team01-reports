@@ -3,6 +3,19 @@ class Issue
     @jira_issue = jira_issue
   end
 
+  def to_hash
+    {
+      remainig_working_days: remainig_working_days,
+      remainig: remainig,
+      key: key,
+      assignee: assignee,
+      url: url,
+      title: title,
+      details: details,
+      component: component
+    }
+  end
+
   def remainig_working_days
     remainig.seconds / 8.hours
   end
