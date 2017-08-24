@@ -23,17 +23,17 @@ class IssueSequence
     end
 
     def color
-      green_color
+      good_color
     end
 
     private
 
-    def green_color
-      color_with_mask [0, 200, 0]
+    def good_color
+      color_with_mask [0, 150, 150]
     end
 
-    def red_color
-      color_with_mask [200, 0, 0]
+    def bad_color
+      color_with_mask [250, 0, 0]
     end
 
     def color_with_mask(color)
@@ -48,10 +48,10 @@ class IssueSequence
 
     def color_mask
       [
-        issue_digest[0..1],
+        '0',
         issue_digest[2..3],
         issue_digest[4..5],
-      ].map { |n| n.to_i(16) % 10 }
+      ].map { |n| n.to_i(16) % 70 }
     end
 
     def issue_digest

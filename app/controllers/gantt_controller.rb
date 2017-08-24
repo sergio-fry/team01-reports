@@ -1,7 +1,7 @@
 class GanttController < ApplicationController
 
   def show
-    @issues = cached_issues.reject { |is| is.remainig_working_days == 0 }
+    @issues = issues.reject { |is| is.remainig_working_days == 0 }
 
     @issue_sequences = []
 
@@ -20,7 +20,7 @@ class GanttController < ApplicationController
   end
 
   def cached_issues
-    Rails.cache.fetch 'GanttController#issues_data.8' do
+    Rails.cache.fetch 'GanttController#issues_data.9' do
       issues.map(&:to_hash)
     end.map { |el| OpenStruct.new(el) }
   end
