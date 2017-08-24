@@ -1,5 +1,5 @@
 class BacklogController < ApplicationController
-  FILTER_ID = 26000
+  FILTER_ID = 26801
 
   def show
     work_in_progress = jira_client.Filter.find FILTER_ID

@@ -14,16 +14,20 @@ function drawChart() {
 
   dataTable.addColumn({ type: 'string', id: 'Assignee' });
   dataTable.addColumn({ type: 'string', id: 'Issue' });
+  dataTable.addColumn({ type: 'string', role: 'tooltip' });
   dataTable.addColumn({ type: 'date', id: 'Start' });
   dataTable.addColumn({ type: 'date', id: 'End' });
   dataTable.addRows([
     <% @issue_sequences.each do |issue_sequence| %>
       <% issue_sequence.issues.each do |issue| %>
-      [ '<%= issue_sequence.assignee %>', '<%= issue.key %>', new Date('<%= issue.start_date %>'), new Date('<%= issue.end_date %>') ],
+      [ '<%= issue_sequence.assignee %>', '<%= issue.key %>', '<%= issue.title %>', new Date('<%= issue.start_date %>'), new Date('<%= issue.end_date %>') ],
       <% end %>
     <% end %>
     ]);
 
-  chart.draw(dataTable);
+  var options = {
+    colors: <%= raw @issue_sequences.map(&:issues).flatten.map(&:color).to_json %>
+  };
+  chart.draw(dataTable, options);
 }
   </script>

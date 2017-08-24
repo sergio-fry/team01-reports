@@ -12,7 +12,7 @@ class Issue
       url: url,
       title: title,
       details: details,
-      components: components
+      component: component
     }
   end
 

@@ -1,3 +1,5 @@
+require 'digest'
+
 class IssueSequence
   attr_reader :assignee
   def initialize(assignee, issues)
@@ -7,7 +9,7 @@ class IssueSequence
 
   class IssueWithDates
     attr_reader :start_date, :issue
-    delegate :key, to: :issue
+    delegate :key, :title, to: :issue
 
     def initialize(issue, start_date)
       @issue = issue
@@ -20,7 +22,41 @@ class IssueSequence
       to + number_of_weekends_in_a_range(start_date, to).days
     end
 
+    def color
+      green_color
+    end
+
     private
+
+    def green_color
+      color_with_mask [0, 200, 0]
+    end
+
+    def red_color
+      color_with_mask [200, 0, 0]
+    end
+
+    def color_with_mask(color)
+      color[0] += color_mask[0]
+      color[1] += color_mask[1]
+      color[2] += color_mask[2]
+
+      color = color.map { |n| n % 255 }
+
+      color.map { |n| n.to_s(16).ljust(2, '0') }.join
+    end
+
+    def color_mask
+      [
+        issue_digest[0..1],
+        issue_digest[2..3],
+        issue_digest[4..5],
+      ].map { |n| n.to_i(16) % 10 }
+    end
+
+    def issue_digest
+      Digest::SHA256.hexdigest issue.component || 'SVP'
+    end
 
     def number_of_weekends_in_a_range(from, to)
       count = 0
