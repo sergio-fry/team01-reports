@@ -1,7 +1,7 @@
 class GanttController < ApplicationController
 
   def show
-    @issues = issues.reject { |is| is.remainig_working_days == 0 }
+    @issues = cached_issues.reject { |is| is.remainig_working_days == 0 }
 
     @issue_sequences = []
 

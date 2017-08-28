@@ -9,7 +9,7 @@ class IssueSequence
 
   class IssueWithDates
     attr_reader :start_date, :issue
-    delegate :key, :title, to: :issue
+    delegate :key, :title, :due_date, to: :issue
 
     def initialize(issue, start_date)
       @issue = issue
@@ -23,7 +23,20 @@ class IssueSequence
     end
 
     def color
-      good_color
+      return good_color if overdue.blank? || overdue < 0 
+
+      bad_color
+    end
+
+    def overdue
+      return nil if due_date.blank?
+
+      (end_date.to_time - due_date.to_time).seconds
+    end
+
+    def overdue?
+      return false if overdue.blank?
+      overdue > 0
     end
 
     private

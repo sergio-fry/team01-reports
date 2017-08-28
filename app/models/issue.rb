@@ -12,8 +12,13 @@ class Issue
       url: url,
       title: title,
       details: details,
+      due_date: due_date,
       component: component
     }
+  end
+
+  def due_date
+    @jira_issue.duedate.to_date rescue nil
   end
 
   def remainig_working_days

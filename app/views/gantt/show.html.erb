@@ -20,7 +20,7 @@ function drawChart() {
   dataTable.addRows([
     <% @issue_sequences.each do |issue_sequence| %>
       <% issue_sequence.issues.each do |issue| %>
-      [ '<%= issue_sequence.assignee %>', '<%= issue.key %>', '<%= issue.title %>', new Date('<%= issue.start_date %>'), new Date('<%= issue.end_date %>') ],
+      [ '<%= issue_sequence.assignee %>', '<%= issue.key %>', '[<%= issue.key %>] <%= issue.title %> (<%= issue.overdue? ? 'Overdue' : 'Left' %>: <%= distance_of_time_in_words issue.due_date, issue.end_date %>)', new Date('<%= issue.start_date %>'), new Date('<%= issue.end_date %>') ],
       <% end %>
     <% end %>
     ]);
