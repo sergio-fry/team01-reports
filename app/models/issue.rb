@@ -26,7 +26,7 @@ class Issue
   end
 
   def remainig
-    @jira_issue.aggregatetimeoriginalestimate || 0
+    @jira_issue.timeestimate || 0
   end
 
   def key

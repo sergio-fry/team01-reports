@@ -1,5 +1,7 @@
 class GanttController < ApplicationController
 
+  FILTER_ID = 26802
+
   def show
     @issues = cached_issues.reject { |is| is.remainig_working_days == 0 }
 
@@ -13,10 +15,7 @@ class GanttController < ApplicationController
   private
 
   def issues
-    work_in_progress = jira_client.Filter.find DailyReportController::FILTER_ID
-    new_issues = jira_client.Filter.find BacklogController::FILTER_ID
-
-    (work_in_progress.issues + new_issues.issues).map { |issue| Issue.new(issue) }
+    jira_client.Filter.find(FILTER_ID).issues.map { |issue| Issue.new(issue) }
   end
 
   def cached_issues

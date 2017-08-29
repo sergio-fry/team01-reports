@@ -23,7 +23,9 @@ class IssueSequence
     end
 
     def color
-      return good_color if overdue.blank? || overdue < 0 
+      return unknown_color if due_date.nil?
+      return good_color if overdue.blank?
+      return good_color if overdue < 0 
 
       bad_color
     end
@@ -41,12 +43,16 @@ class IssueSequence
 
     private
 
+    def unknown_color
+      '#EEEEEE'
+    end
+
     def good_color
-      color_with_mask [0, 150, 150]
+      '#33AA55'
     end
 
     def bad_color
-      color_with_mask [250, 0, 0]
+      '#AA3355'
     end
 
     def color_with_mask(color)
