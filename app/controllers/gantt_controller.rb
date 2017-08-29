@@ -1,4 +1,5 @@
 class GanttController < ApplicationController
+  before_action :check_authentication
 
   FILTER_ID = 26802
 

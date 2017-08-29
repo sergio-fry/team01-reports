@@ -1,4 +1,5 @@
 class BacklogController < ApplicationController
+  before_action :check_authentication
   FILTER_ID = 26801
 
   def show
