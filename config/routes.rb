@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :working_days
   root 'welcome#index'
 
   resources :sessions
