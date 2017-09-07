@@ -1,0 +1,13 @@
+<h1>TimeReport</h1>
+
+<% @report.tracks.group_by(&:assignee).each do |assignee, tracks|  %>
+  <p>
+  <strong><%= assignee %></strong>
+  <% tracks.each do |track| %>
+    <br />
+    <%= link_to track.url, track.url %>
+    <%= track.component %>
+    <%= track.details %>
+  <% end %>
+  </p>
+<% end %>

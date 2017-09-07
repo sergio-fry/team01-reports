@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'time_report', to: 'time_report#show'
 
   resources :sessions
   get 'logout', to: 'sessions#logout', as: :logout
