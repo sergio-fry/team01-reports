@@ -25,8 +25,13 @@ class Issue
     remainig.seconds / 8.hours
   end
 
-  def remainig
+  # in seconds
+  def estimating
     @jira_issue.timeestimate || 0
+  end
+
+  def remainig
+    estimating
   end
 
   def key
@@ -57,4 +62,3 @@ class Issue
     @jira_issue.send(m)
   end
 end
-

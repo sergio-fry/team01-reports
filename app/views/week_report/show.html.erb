@@ -1,0 +1,18 @@
+<h1>WeekReport</h1>
+
+<% @report.tracks.group_by(&:assignee).each do |assignee, tracks|  %>
+  <p>
+  <strong><%= assignee %></strong>
+
+  <table border=1 cellspadding=20>
+    <% tracks.group_by(&:key).each do |key, issue_tracks| %>
+    <tr>
+      <td><%= key %></td>
+      <td><%= issue_tracks.sum(&:estimating) %></td>
+      <td><%= issue_tracks.sum(&:duration) %></td>
+      <td><%= @report.issue_total_time(key) %></td>
+    </tr>
+    <% end %>
+  </table>
+  </p>
+<% end %>

@@ -1,51 +1,16 @@
 require 'open-uri'
 require 'csv'
 
-
 class TimeReportController < ApplicationController
+  TRACK_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTkSa1fS8Q0PwZ6Xu19QsFLcCnRsLgteYVck4h_YiHaSJFuDMkH_IHWyWZkHDApQHUcQysJDkd06PSc/pub?gid=509721696&single=true&output=csv'
 
-  class Track
-    def initialize(row)
-      @row = row
-    end
-
-    def assignee
-      @row[2]
-    end
-
-    def details
-      @row[4]
-    end
-
-    def url
-      "https://devprg.atlassian.net/browse/#{@row[3]}"
-    end
-
-    def component
-    end
-
-    def date
-      Date.parse @row[1]
-    end
-  end
-
-  class Report
-    def initialize(url)
-      @url = url
-    end
-
+  class Report < TrackerReport
     def tracks
-      data = []
-
-      open @url do |f|
-        data = CSV.parse f, headers: true
-      end
-
-      data.map { |row| Track.new(row) }.find_all { |r| r.date.today? }
+      super.find_all { |r| r.date.today? }
     end
   end
 
   def show
-    @report = Report.new ENV['TRACK_CSV_URL']
+    @report = Report.new TRACK_CSV_URL
   end
 end

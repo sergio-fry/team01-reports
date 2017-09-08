@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'week_report', to: 'week_report#show'
+
   get 'time_report', to: 'time_report#show'
 
   resources :sessions
