@@ -8,8 +8,7 @@
     <% tracks.group_by(&:key).each do |key, issue_tracks| %>
     <tr>
       <td><%= key %></td>
-      <td><%= issue_tracks.sum(&:estimating) %></td>
-      <td><%= issue_tracks.sum(&:duration) %></td>
+      <td><%= Issue.new(jira_client.Issue.find(key.strip)) %></td>
       <td><%= @report.issue_total_time(key) %></td>
     </tr>
     <% end %>

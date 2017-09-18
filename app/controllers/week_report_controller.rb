@@ -1,4 +1,6 @@
 class WeekReportController < ApplicationController
+  helper_method :jira_client
+  
   TRACK_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTkSa1fS8Q0PwZ6Xu19QsFLcCnRsLgteYVck4h_YiHaSJFuDMkH_IHWyWZkHDApQHUcQysJDkd06PSc/pub?gid=509721696&single=true&output=csv'
 
   class Report < TrackerReport
@@ -8,7 +10,7 @@ class WeekReportController < ApplicationController
       attr_accessor :jira_client
 
       def estimating
-        issue.estimating.seconds / 1.hour
+        #issue.estimating.seconds / 1.hour
       end
 
       private
@@ -19,24 +21,17 @@ class WeekReportController < ApplicationController
     end
 
     def tracks
-      scope = data.map do |row|
-        track = TrackWrapper.new(row)
-        track.jira_client = jira_client
-
-        track
-      end
-
-      scope.find_all { |r| r.date.cweek == Date.today.cweek }
+      super.find_all { |r| r.date.cweek == Date.today.cweek }
     end
 
     def issue_total_time(key)
-      data.map { |row| Track.new(row) }.find_all { |tr| tr.key == key }.map(&:duration).sum
+      tracks.find_all { |tr| tr.key == key }.map(&:duration).sum
     end
   end
 
   def show
     @report = Report.new TRACK_CSV_URL
-    @report.jira_client = jira_client
+    #@report.jira_client = jira_client
   end
 
 end
