@@ -33,5 +33,4 @@ class WeekReportController < ApplicationController
     @report = Report.new TRACK_CSV_URL
     #@report.jira_client = jira_client
   end
-
 end
